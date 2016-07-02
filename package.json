@@ -2,14 +2,14 @@
     "name": "love-launcher",
     "displayName": "LÖVE Launcher",
     "description": "Launch LÖVE projects via shortcut.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "SK83RJOSH",
     "repository": "https://github.com/SK83RJOSH/vscode-love-launcher",
-	"icon": "icon.svg",
-	"galleryBanner": {
-		"color": "#6CBEE4",
-		"theme": "dark"
-	},
+    "icon": "icon.svg",
+    "galleryBanner": {
+        "color": "#6CBEE4",
+        "theme": "dark"
+    },
     "engines": {
         "vscode": "^1.0.0"
     },
@@ -27,37 +27,39 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [{
-            "command": "lovelauncher.launch",
-            "title": "Launch LÖVE"
-        }],
-		"keybindings": [
-			{
-				"command": "lovelauncher.launch",
-				"key": "alt+l"
-			}
-		],
-		"configuration": {
-			"type": "object",
-			"title": "LÖVE Launcher Config",
-			"properties": {
-				"lovelauncher.path": {
-					"type": "string",
-					"description": "Path to your LÖVE executable.",
-					"default": "C:\\Program Files (x86)\\LOVE\\love.exe"
-				},
-				"lovelauncher.args": {
-					"type": "string",
-					"description": "Arguments to pass to LÖVE.",
-					"default": ""
-				},
-				"lovelauncher.useOutput": {
-					"type": "boolean",
-					"description": "Whether or not to pipe stdout to an output channel (requires io.stdout:setvbuf('no') to be in conf.lua).",
-					"default": false
-				}
-			}
-		}
+        "commands": [
+            {
+                "command": "lovelauncher.launch",
+                "title": "Launch LÖVE"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "lovelauncher.launch",
+                "key": "alt+l"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "LÖVE Launcher Config",
+            "properties": {
+                "lovelauncher.path": {
+                    "type": "string",
+                    "description": "Path to your LÖVE executable.",
+                    "default": "C:\\Program Files (x86)\\LOVE\\love.exe"
+                },
+                "lovelauncher.args": {
+                    "type": "string",
+                    "description": "Arguments to pass to LÖVE.",
+                    "default": ""
+                },
+                "lovelauncher.useOutput": {
+                    "type": "boolean",
+                    "description": "Whether or not to pipe stdout to an output channel (requires io.stdout:setvbuf('no') to be in conf.lua).",
+                    "default": false
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
