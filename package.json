@@ -2,7 +2,7 @@
     "name": "love-launcher",
     "displayName": "LÖVE Launcher",
     "description": "Launch LÖVE projects via shortcut.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "SK83RJOSH",
     "repository": "https://github.com/SK83RJOSH/vscode-love-launcher",
     "icon": "icon.svg",
