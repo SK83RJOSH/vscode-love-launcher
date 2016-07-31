@@ -5,6 +5,14 @@ import * as child_process from 'child_process';
 
 let output: vscode.OutputChannel;
 
+function log(message: string, useOutput: boolean) {
+	if(useOutput) {
+		output.appendLine(message);
+	} else {
+		console.log(`${output.name}: ${message}`);
+	}
+}
+
 export function activate(context: vscode.ExtensionContext) {
 	output = vscode.window.createOutputChannel("LÖVE Launcher");
 
@@ -14,34 +22,27 @@ export function activate(context: vscode.ExtensionContext) {
 		let path = config.get<string>('path');
 		let args = config.get<string>('args');
 		let cwd = vscode.workspace.rootPath;
+		let process = child_process.spawn(`${path}`, [".", args], {cwd});
+
+		log(`Spawning process: "${path}" "${cwd}" ${args}`, useOutput);
 
 		if(useOutput) {
-			let cmd = `"${path}" "${cwd}" ${args}`;
-
-			output.appendLine(`Executing: ${cmd}`);
-
-			let process = child_process.exec(cmd, {cwd}, (error) => {
-				if(error) {
-					output.appendLine(`Error: ${error}`);
-				}
-			});
-
 			process.stderr.on('data', (data) => {
-				output.append(data);
+				output.append(data.toString());
 			});
 
 			process.stdout.on('data', (data) => {
-				output.append(data);
-			});
-		} else {
-			console.log(`Executing: ${path}`);
-
-			let process = child_process.execFile(path, [".", args], {cwd}, (error) => {
-				if(error) {
-					console.log(`Error: ${error}`);
-				}
+				output.append(data.toString());
 			});
 		}
+
+		process.on('error', (err) => {
+			log(`Could not spawn process: ${err}`, useOutput);
+		});
+
+		process.on('close', (code) => {
+			log(`Process exited with code ${code}`, useOutput);
+		});
 	});
 
 	context.subscriptions.push(disposable);
